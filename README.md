@@ -6,7 +6,7 @@ Let's Go to the Movies
 Create an app that shows movie data from http://www.omdbapi.com/ and allows users
 to search by title. Use the API_KEY from the class Ryver channel and append to url as `http://www.omdbapi.com/?s=Star%20Wars&plot=short&r=json&apikey=<key goes here>`
 
-You are free to query the data for a genre, actor, whatever that you want.
+You are free to query the data for a genre, actor, whatever that you want. Use `encodeURI` to change `Star Wars` into `Star%20Wars`.
 
 * Use `create-react-app` to create your react app project
 
