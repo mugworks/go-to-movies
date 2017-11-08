@@ -4,7 +4,7 @@ Let's Go to the Movies
 ## Description
 
 Create an app that shows movie data from http://www.omdbapi.com/ and allows users
-to search by title. Use the API_KEY from the class Ryver channel.
+to search by title. Use the API_KEY from the class Ryver channel and append to url as `http://www.omdbapi.com/?s=Star%20Wars&plot=short&r=json&apikey=<key goes here>`
 
 You are free to query the data for a genre, actor, whatever that you want.
 
