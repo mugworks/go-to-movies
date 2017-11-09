@@ -22,7 +22,6 @@ class App extends Component {
     this.setState({ loading: true });
     const response = await fetch(`http://www.omdbapi.com/?s=${search}&apikey=${omdbKey}`);
     const body = await response.json();
-    console.log('search', search);
     console.log('response', response);
     console.log('body', body);
     this.setState({
@@ -40,12 +39,11 @@ class App extends Component {
   
   render() {
     const { search, items, loading } = this.state;
-    const choices = ['Title', 'Year'];
-    console.log('items', items[0]);
+    const choices = ['Title', 'Year', 'Poster'];
       
     const list = (
       <ul>
-        {items.map(film => <li key={film.Title}>{film.Title}</li>)}
+        {items.map(film => <li key={film.Title}>{`${film.Title}(${film.Year})`}<img src={film.Poster} alt=''/></li>)}
       </ul>
     );
 
