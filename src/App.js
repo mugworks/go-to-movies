@@ -9,9 +9,15 @@ class App extends Component {
     super();
     this.state = {
       items: [],
+      date: new Date(),
       search: 'Star Wars',
       loading: false
     };
+  }
+  
+
+  handleFormSubmit(value) {
+    this.setState({ search: value }, () => this.loadSearch(value));
   }
 
   componentDidMount() {
@@ -22,8 +28,6 @@ class App extends Component {
     this.setState({ loading: true });
     const response = await fetch(`http://www.omdbapi.com/?s=${search}&apikey=${omdbKey}`);
     const body = await response.json();
-    console.log('response', response);
-    console.log('body', body);
     this.setState({
       items: body.Search,
       loading: false
@@ -38,33 +42,38 @@ class App extends Component {
   
   
   render() {
-    const { search, items, loading } = this.state;
-    const choices = ['Title', 'Year', 'Poster'];
+    const { date, items, title, loading } = this.state;
       
     const list = (
-      <ul>
-        {items.map(film => <li key={film.Title}>{`${film.Title}(${film.Year})`}<img src={film.Poster} alt=''/></li>)}
-      </ul>
+      <div className="wrapper">
+        {items.map(film => <div key={film.imdbID}>
+          <figcaption>{film.Title}</figcaption>
+          <figcaption>{film.Year}</figcaption>
+          <img src={film.Poster} alt=''/></div>)}
+      </div>
     );
 
     const load = <div>loading...</div>;
 
     return (
-      // <p>hi</p>
-      <section>
-        {choices.map(choice => {
-          return <button key={choice} disabled={choice === search}
-            onClick={() => this.changeSearch(choice)}
-          >
-            {choice}
-          </button>;
-        })}
-        <div>{items.length} {search}</div>
+      <div className="App">
+        <header className="App-header" date={this.state.date}>
+          <h1 className="App-title">Welcome to the Movie Db</h1>
+          <p>It is { date.toLocaleTimeString() }</p>
+          <form onSubmit={(event) => {
+            event.preventDefault();
+            this.handleFormSubmit(event.target.title.value);
+            event.target.reset();
+          }}>
+            <label>Enter a movie title:&nbsp;&nbsp;
+              <input name="title" type="text" autoComplete="off" defaultValue={title}/>
+              <input className="enter" type="submit" value="Enter"/>
+            </label><br/>
+          </form>
+        </header>
         {loading ? load : list}
-      </section>
-    );
-      
-    
+      </div>
+    ); 
   }
 }
 
