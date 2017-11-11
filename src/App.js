@@ -42,7 +42,7 @@ class App extends Component {
   
   
   render() {
-    const { date, items, title, loading } = this.state;
+    const { date, items, loading } = this.state;
       
     const list = (
       <div className="wrapper">
@@ -60,16 +60,9 @@ class App extends Component {
         <header className="App-header" date={this.state.date}>
           <h1 className="App-title">Welcome to the Movie Db</h1>
           <p>It is { date.toLocaleTimeString() }</p>
-          <form onSubmit={(event) => {
-            event.preventDefault();
-            this.handleFormSubmit(event.target.title.value);
-            event.target.reset();
-          }}>
-            <label>Enter a movie title:&nbsp;&nbsp;
-              <input name="title" type="text" autoComplete="off" defaultValue={title}/>
-              <input className="enter" type="submit" value="Enter"/>
-            </label><br/>
-          </form>
+          <SearchTitle search={this.state.search}
+            onFormSubmit={value => this.handleFormSubmit(value)}
+          />  
         </header>
         {loading ? load : list}
       </div>
@@ -78,3 +71,22 @@ class App extends Component {
 }
 
 export default App;
+
+class SearchTitle extends Component {
+  render() {
+    const { search, onFormSubmit } = this.props;
+
+    return(
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        onFormSubmit(event.target.title.value);
+        event.target.reset();
+      }}>
+        <label>Enter a movie title:&nbsp;&nbsp;
+          <input name="title" type="text" autoComplete="off" defaultValue={search}/>
+          <input className="enter" type="submit" value="Enter"/>
+        </label><br/>
+      </form>
+    );
+  }
+}
